@@ -113,7 +113,11 @@ if [ "$1" = add ]; then
     else
 	log debug "$DEVNAME contains filesystem type $FSTYPE"
 
-	fstype=$FSTYPE
+ 	# Fix ntfs mount problems
+	case "$1" in
+	    ntfs) fstype="ntfs-3g" ;;
+	    *) fstype=$FSTYPE ;;
+	esac
 	# Test if the filesystem type is in the list of filesystem
 	# types to mount.
 	if in_list "$fstype" "$FILESYSTEMS"; then
